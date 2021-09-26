@@ -29,8 +29,10 @@ class LangRecognizer:Derivation {
 //		
 //		echo(data)
 //	validateCoord(data.toStr,1)
-	validateString(data)
+	validateString(data)// to end
 		ValidatePlotCmd(data)
+		
+		
 		
 	
 //		
@@ -131,14 +133,16 @@ class LangRecognizer:Derivation {
 				
 				
 				
-				temp := plot_cmd[0].split(',')
-				echo(temp[1])
+				temp := plot_cmd[1].split(',')
+			
+				echo(temp[1] + "*****")
 				coordx := plot_cmd[1]
-				coordy := temp[1]
+				coordy := temp[1].toStr
 				
-
+				echo("------------")
 				echo(coordx)
 				echo(coordy)
+				echo("------------")
 				
 				
 				
@@ -155,16 +159,19 @@ class LangRecognizer:Derivation {
 						return false
 					}
 					
-					echo(temp[1])
+				
 					if(coordy.size != 1){
 						
-						errorHandler("Error : Y size isn't correct", "Y valid numbers: ${y}")
+						errorHandler("Error : ${coordy} - ${coordy.size} size isn't correct", "Y valid numbers: ${y}")
 					}
 					
-					echo(coordy)
+					
+					
+					
 					if(!validateY(coordy)){
 						
-						errorHandler("Error Sytnax: ${coordy} is a invalid y ", "Y valid numbers: ${y}")
+						echo("Validate Second Y")
+						errorHandler("Error Sytnax: ${coordy} is a invalid y", "Y valid numbers: ${y}")
 						return false
 						
 					}
@@ -248,9 +255,13 @@ class LangRecognizer:Derivation {
 		
 		
 		
-		data := dataInput.getRange(1..2)
-		datax := dataInput.getRange(1..1)
-		datay := dataInput.getRange(2..2)
+		data := dataInput.getRange(0..1)
+		datax := dataInput.getRange(0..0)
+		datay := dataInput.getRange(1..1)
+		
+		echo("Values inside validat Coord")
+		echo("Error" + datay)
+		
 	
 		
 		//validate values for xy
@@ -273,7 +284,7 @@ class LangRecognizer:Derivation {
 		
 		if(!validateY(datay)){
 			
-			errorHandler("Error Sytnax: ${datay} is an invalid for y ", "Valid y values are: ${y}")
+			errorHandler("Error Sytnax: ${datay} is an invalid for y **", "Valid y values are: ${y}")
 			return false
 		}
 		
@@ -299,9 +310,10 @@ class LangRecognizer:Derivation {
 	
 	
 	Bool validateY(Str data){
-	
 		
-	echo(data)
+		echo("Inside y func")
+		echo(data)
+	
 	y := ["1", "2","3","4","5","6","7"]
 
 	    for(Int i := 0; i < y.size; i++){
@@ -314,7 +326,7 @@ class LangRecognizer:Derivation {
 	    return false
 	}
 	
-	
+	//Error Hanlder function - Print Errors
 	Void errorHandler(Str msg, Str error ){
 		
 		echo(msg + error)
