@@ -6,10 +6,7 @@ class LangRecognizer:Derivation {
 	
 	// function to get user input and other function to validate grammer and create derivation
 	 Void getInput(Str input ){
-			
-	
-
-			
+				
 		data :=input
 		parserGrammer(data)
 		
@@ -19,24 +16,12 @@ class LangRecognizer:Derivation {
 	Void parserGrammer(Str input){
 		
 		der :=Derivation()
-		
-		
 		data := input.split(' ')
-		
-		
 	
-		
-//		
-//		echo(data)
-//	validateCoord(data.toStr,1)
-	validateString(data)// to end
+
+		validateString(data)// to end
 		ValidatePlotCmd(data)
-		
-		
-		
-	
-//		
-		
+
 		
 
 	}	
@@ -63,11 +48,7 @@ class LangRecognizer:Derivation {
 			if( lastElement != chartEnd  ){// validate the last element of the string
 				errorHandler("Error Syntax:  ${lastElement} is an invalid sytnax."," String should end with:  ${chartEnd}")
 			}
-			
-			
-			
-			
-		
+	
 	}
 	
 	//validate data excluding the first and last element of the string
@@ -82,11 +63,12 @@ class LangRecognizer:Derivation {
 
 		der := Derivation()
 		plot_cmd := data.getRange(1 ..data.size - 2)
-		Str [] test  := plot_cmd
+		//Str [] test  := plot_cmd
 		
 		inputSize := plot_cmd.size
 		
-		inputString :="to &lt;plot_cmd&gt; end<br>"
+		inputString :="to <plot_cmd> end"
+		der.leftMostDer(inputString)
 		
 		index := 0
 		
@@ -95,33 +77,33 @@ class LangRecognizer:Derivation {
 			
 			Bool position := true
 			
-			for(Int i := 1; i < inputSize -1; i++){
+			for(Int i := 0; i < plot_cmd[1].size  ; i++){
 				
-				if(plot_cmd[i] == ";"){
+				
+				if(plot_cmd[1].getRange(i..i) == ";"){
 					
 					position = false
 					
 				}
-				
 			
 			}
-			
-			
-			
-			
+
 			if(position){
 				
-				inputString = "&lt;cmd&g;"
+				inputString = "<cmd>"
+				der.leftMostDer(inputString)
 				
 			}else{
 				
-				inputString = inputString.replace("&lt;plot_cmd&gt;", "&lt;plot_cmd&gt; ; &lt;plot_cmd&gt;")
+				inputString = inputString.replace("<plot_cmd>", "<cmd> ; <plot_cmd>")
+				der.leftMostDer(inputString)
+					
 			}
 			
 			//r.leftMostDer(inputString)
 			
 			
-			//validate 
+			//validate if string element is equal to vbar, hbar , fill. if not a error is throw
 			
 			if(plot_cmd[index] == "vbar" || plot_cmd[index] == "hbar"){
 				
@@ -131,9 +113,7 @@ class LangRecognizer:Derivation {
 					errorHandler("Error Syntax", "Input String does not contain minimun arguments")
 				}
 				
-				
-				
-				
+			
 				temp := plot_cmd[1].split(',')
 				tempy := temp[1].toStr.split(';')
 				
