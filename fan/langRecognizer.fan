@@ -20,7 +20,7 @@ class LangRecognizer:Derivation {
 		
 		der :=Derivation()
 		
-		limit := " ,;".toRegex
+		
 		data := input.split(' ')
 		
 		
@@ -90,13 +90,11 @@ class LangRecognizer:Derivation {
 		
 		index := 0
 		
-		echo("value of index")
-		echo(index)
-		echo(plot_cmd[index])
+	
 		while( index < inputSize){
 			
 			Bool position := true
-			echo(index.toStr + "dd")
+			
 			for(Int i := 1; i < inputSize -1; i++){
 				
 				if(plot_cmd[i] == ";"){
@@ -133,8 +131,7 @@ class LangRecognizer:Derivation {
 					errorHandler("Error Syntax", "Input String does not contain minimun arguments")
 				}
 				
-				echo("----------------------------")
-				echo(index)
+				
 				
 				
 				temp := plot_cmd[1].split(',')
@@ -179,65 +176,68 @@ class LangRecognizer:Derivation {
 					inputString = inputString.replace("&lt;y&gt;", "${coordy}")
 					//ll der to store derivation
 				
-					echo("vbar *********************************") 
-					echo(index)
+					
 				}else{ // validating for hbar
 					
 					echo("hbar here")
 					
-//					inputString = inputString.replace("&lt;cmd&gt;", "hbar &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
-//					//call der to store derivation
-//					
-//					if(!validateCoord(coordx, index)){
-//						
-//						return false
-//					}
-//					
-//					
-//					if(!validateCoord(coordy, index)){
-//						
-//						return false
-//					}
+					inputString = inputString.replace("&lt;cmd&gt;", "hbar &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
+					//call der to store derivation
+					
+					if(!validateCoord(coordx, index)){
+						
+						return false
+					}
+					
+					
+					if(!validateCoord(coordy, index)){
+						
+						return false
+					}
 					
 				}
 				
 				index = index +=2
 				
-				echo(plot_cmd[index])
+				
 				
 			}else if( plot_cmd[index]== "fill"){
 				
-				if(index+2 > plot_cmd.size){
+				if(index+1 > plot_cmd.size){
 					
 					errorHandler("Statement does not meet the minimum arguments","Verify string enter with grammer")
 				}
-				
+//				
 				if(plot_cmd[index+1] == ";" || plot_cmd[index+1] == "end"){
 
 					
 					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+1]}")
 				}
-				if(plot_cmd[index+2] == ";" || plot_cmd[index+2] == "end"){
-
-					
-					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+2]}")
-				}
+//				if(plot_cmd[index+2] == ";" || plot_cmd[index+2] == "end"){
+//
+//					
+//					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+2]}")
+//				}
 				
 				tempCoord := plot_cmd[index+1]
+				 
 				
-				if(plot_cmd[index+1] == "fill"){
+				
+				if(plot_cmd[index] == "fill"){
+					
 					
 					inputString = inputString.replace("&lt;cmd&gt;", "fill &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
 					//call der function to save
 					
-					if(!validateCoord(tempCoord, index+1)){
+					if(!validateCoord(tempCoord, index)){
 						
 						return false
 					}
+					
+					
 				}
 				
-				echo("Inside fill")
-				echo(index)
+				
 				index+=3
 				
 			}else{
@@ -246,8 +246,7 @@ class LangRecognizer:Derivation {
 				index +=5
 			}
 			
-			echo("final")
-		echo(index)
+		
 		}
 		
 		
@@ -268,7 +267,6 @@ class LangRecognizer:Derivation {
 		
 		
 		
-	
 		
 		//validate values for xy
 		

@@ -64,6 +64,7 @@ class Main {
 				
 			}catch(CastErr e){
 				
+				echo("main")
 				echo(e)
 			}
 			
