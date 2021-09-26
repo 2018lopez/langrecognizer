@@ -1,4 +1,3 @@
-using afPegger::Peg
 
 class Main {
 	
@@ -58,7 +57,7 @@ class Main {
 				
 				if(input.lower != "g"){ // verify if the input is equal g to avoid that g is validate 
 					
-					langRec.getInput(input)
+					langRec.getInput(input.lower)
 				}
 			
 				

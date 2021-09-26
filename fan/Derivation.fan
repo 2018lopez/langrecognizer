@@ -5,26 +5,21 @@ class Derivation {
 	
 	Void leftMostDer(Str input){
 		
-		Str temp :=""
-		data := input.split
-		to := data[0]
-		end := data[data.size-1]
+//			
+//			der.leftMostDer("begin <stmt_list> end ")
+//		der.leftMostDer("begin <stmt> end  ")
+//		der.leftMostDer("begin <var> = <expr> end  ")
+//		der.leftMostDer("begin C = <expr> end ")
+//		der.leftMostDer("begin C = <var> - <var> end ")
+//		der.printDerivation()
 		
-		chart :=  " <program>  → " + to +  " <plot_cmd> " + end 
 		
-		
-		plot_cmd := "<program>  → " + to + " <cmd>; <plot_cmd> " + end
-		
-	
-		
-		echo(data)
-		echo(chart)
-		echo(plot_cmd)
 		
 		
 	}
 	
 	Void printDerivation(){
+		
 		
 	}
 }
