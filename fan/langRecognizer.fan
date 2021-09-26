@@ -90,11 +90,13 @@ class LangRecognizer:Derivation {
 		
 		index := 0
 		
-		
+		echo("value of index")
+		echo(index)
+		echo(plot_cmd[index])
 		while( index < inputSize){
 			
 			Bool position := true
-			
+			echo(index.toStr + "dd")
 			for(Int i := 1; i < inputSize -1; i++){
 				
 				if(plot_cmd[i] == ";"){
@@ -131,26 +133,23 @@ class LangRecognizer:Derivation {
 					errorHandler("Error Syntax", "Input String does not contain minimun arguments")
 				}
 				
+				echo("----------------------------")
+				echo(index)
 				
 				
 				temp := plot_cmd[1].split(',')
-			
-				echo(temp[1] + "*****")
-				coordx := plot_cmd[1]
-				coordy := temp[1].toStr
+				tempy := temp[1].toStr.split(';')
 				
-				echo("------------")
-				echo(coordx)
-				echo(coordy)
-				echo("------------")
+				coordx := temp[0].toStr
+				coordy := tempy[0]
+				
+				
 				
 				
 				
 				
 				if(plot_cmd[index] == "vbar"){
-					
-//					
-////					
+									
 					inputString = inputString.replace("&lt;cmd&gt;", "vbar &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
 					//insert to der object
 					
@@ -170,7 +169,7 @@ class LangRecognizer:Derivation {
 					
 					if(!validateY(coordy)){
 						
-						echo("Validate Second Y")
+						
 						errorHandler("Error Sytnax: ${coordy} is a invalid y", "Y valid numbers: ${y}")
 						return false
 						
@@ -180,7 +179,8 @@ class LangRecognizer:Derivation {
 					inputString = inputString.replace("&lt;y&gt;", "${coordy}")
 					//ll der to store derivation
 				
-					
+					echo("vbar *********************************") 
+					echo(index)
 				}else{ // validating for hbar
 					
 					echo("hbar here")
@@ -201,7 +201,9 @@ class LangRecognizer:Derivation {
 					
 				}
 				
-				index +=5
+				index = index +=2
+				
+				echo(plot_cmd[index])
 				
 			}else if( plot_cmd[index]== "fill"){
 				
@@ -234,6 +236,8 @@ class LangRecognizer:Derivation {
 					}
 				}
 				
+				echo("Inside fill")
+				echo(index)
 				index+=3
 				
 			}else{
@@ -242,7 +246,10 @@ class LangRecognizer:Derivation {
 				index +=5
 			}
 			
+			echo("final")
+		echo(index)
 		}
+		
 		
 		return true
 		
@@ -259,8 +266,7 @@ class LangRecognizer:Derivation {
 		datax := dataInput.getRange(0..0)
 		datay := dataInput.getRange(1..1)
 		
-		echo("Values inside validat Coord")
-		echo("Error" + datay)
+		
 		
 	
 		
@@ -311,8 +317,7 @@ class LangRecognizer:Derivation {
 	
 	Bool validateY(Str data){
 		
-		echo("Inside y func")
-		echo(data)
+		
 	
 	y := ["1", "2","3","4","5","6","7"]
 
