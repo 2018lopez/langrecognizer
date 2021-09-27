@@ -145,26 +145,29 @@ class LangRecognizer:Derivation {
 					
 				}else{ // validating for hbar element
 					
+					//split string at , and semicolon 
+						xtemp := plot_cmd[index+1].toStr.split(',')
+						xtempx := xtemp[1].toStr.split(';')
+					
+					//new values for xy after parsing 
+						xValue := xtemp[0]
+						xSvalue :=  xtempx[0]
+					
 					inputString = inputString.replace("<cmd>", "hbar <x><y>,<x>")//derivation created for hbar
 					der.leftMostDer(inputString)// add derivation
 					
-					if(!validateCoord(coordx, index)){//validate xy values
+					if(!validateCoord(xValue, index)){//validate xy values
 						
 						return false
 					}
 					
-					//derivation error replace both x
-//					temps := coordx.getRange(0..0)
-//					inputString = inputString.replace(",${temps}",",<x>")
-//					der.leftMostDer(inputString)
 					
-					
-					if(!validateX(coordy)){// validate second x in the hbar element
+					if(!validateX(xSvalue)){// validate second x in the hbar element
 						
 						return false
 					}
 					
-					inputString = inputString.replace("<x>", "${coordy}")//derivation created for secondd x
+					inputString = inputString.replace("<x>", "${xSvalue}")//derivation created for second x
 					der.leftMostDer(inputString)//add derivation
 					
 				}
