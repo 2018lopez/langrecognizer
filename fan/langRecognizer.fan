@@ -123,9 +123,9 @@ class LangRecognizer:Derivation {
 					}
 					
 					//derivation error replace both y 
-					tempI := coordx.getRange(1..1)
-					inputString = inputString.replace(",${tempI}",",<y>")
-					der.leftMostDer(inputString)
+//					tempI := coordx.getRange(1..1)
+//					inputString = inputString.replace(",${tempI}",",<y>")
+//					der.leftMostDer(inputString)
 					
 					if(coordy.size != 1){// validate the second y and verify it a single digit number 
 						
@@ -154,9 +154,9 @@ class LangRecognizer:Derivation {
 					}
 					
 					//derivation error replace both x
-					temps := coordx.getRange(0..0)
-					inputString = inputString.replace(",${temps}",",<x>")
-					der.leftMostDer(inputString)
+//					temps := coordx.getRange(0..0)
+//					inputString = inputString.replace(",${temps}",",<x>")
+//					der.leftMostDer(inputString)
 					
 					
 					if(!validateX(coordy)){// validate second x in the hbar element
@@ -243,7 +243,12 @@ class LangRecognizer:Derivation {
 		}
 		
 		//derivation for x value
-		inputString = inputString.replace("<x>", datax)		
+		inputString = inputString.replace("<x>", datax)
+		
+		//hbar special derivation because it replace both x 
+		temps := datax.getRange(0..0)
+		inputString = inputString.replace(",${temps}",",<x>")
+					
 		der.leftMostDer(inputString)
 	
 		//validate value for y
@@ -255,7 +260,12 @@ class LangRecognizer:Derivation {
 		
 		//derivation for y value
 		inputString = inputString.replace("<y>", datay)
-		der.leftMostDer(inputString)
+		
+		//derivation second y - fix bug that replace both y values with the same value
+		tempI := datay.getRange(0..0)
+		inputString = inputString.replace(",${tempI}",",<y>")
+		
+		der.leftMostDer(inputString)//add derivation for y values
 		
 		return true
 	}
