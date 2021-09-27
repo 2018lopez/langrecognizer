@@ -18,9 +18,9 @@ class Main {
 			echo("Allowed Grammer:")
 			echo("\n")
 			echo(grammer)
-			echo("-------------------------------------")
+			echo("------------------------------------------------------------------------")
 			echo("Commands: STOP to end the program and  g to display allowed Grammer")
-			echo("-------------------------------------")
+			echo("------------------------------------------------------------------------")
 			echo("\n")
 
 		langRec := LangRecognizer()// declare object for lang Recognizer class
@@ -61,16 +61,11 @@ class Main {
 				}
 			
 				
+			}catch(Err e){
 				
-			}catch(CastErr e){
-				
-				echo("main")
 				echo(e)
 			}
-			
-			
-
-			
+	
 			
 		}
 		 

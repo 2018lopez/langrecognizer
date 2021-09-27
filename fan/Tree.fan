@@ -2,12 +2,12 @@
 
 class Tree {
 	
+	Str [] treedata := [""]
+	Void dataTree(Str [] data){
+		
+	treedata = data
+		
 	
-	Void printTree(Str [] data){
-		
-	echo(data.size)
-		
-		
 		
 //	
 //	echo("\n Parse Tree")
@@ -29,6 +29,12 @@ class Tree {
 //
 //    echo("\t  /\t\\ ")
 
+	}
+	
+	Void printTree(){
+		
+		echo("Print Parse Tree")
+		echo(treedata)
 	}
 		
    
