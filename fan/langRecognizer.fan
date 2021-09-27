@@ -2,7 +2,7 @@
 	
 class LangRecognizer:Derivation {
 
-	Int chartValidate := 0	
+	Str inputString :=""
 	
 	// function to get user input and other function to validate grammer and create derivation
 	 Void getInput(Str input ){
@@ -55,7 +55,7 @@ class LangRecognizer:Derivation {
 	Void ValidatePlotCmd(Str [] data){
 		
 		lastElement := data[data.size - 1]// remove the first and last element in the string
-		firstElement := data[0]
+		firstElement := data[0]// first element
 		
 		x := ["1", "2","3","4","5","6","7"]
 		y := ["1", "2","3","4","5","6","7"]
@@ -67,7 +67,7 @@ class LangRecognizer:Derivation {
 		
 		inputSize := plot_cmd.size
 		
-		inputString :="to <plot_cmd> end"
+		inputString ="to <plot_cmd> end"
 		der.leftMostDer(inputString)
 		
 		index := 0
@@ -77,10 +77,10 @@ class LangRecognizer:Derivation {
 			
 			Bool position := true
 			
-			for(Int i := 0; i < plot_cmd[1].size  ; i++){
+			for(Int i := 0; i < plot_cmd[index+1].size  ; i++){
 				
 				
-				if(plot_cmd[1].getRange(i..i) == ";"){
+				if(plot_cmd[index+1].getRange(i..i) == ";"){
 					
 					position = false
 					
@@ -90,17 +90,17 @@ class LangRecognizer:Derivation {
 
 			if(position){
 				
-				inputString = "<cmd>"
-				der.leftMostDer(inputString)
+				inputString = inputString.replace("<plot_cmd>","<cmd>")
+				
 				
 			}else{
 				
 				inputString = inputString.replace("<plot_cmd>", "<cmd> ; <plot_cmd>")
-				der.leftMostDer(inputString)
+				
 					
 			}
+			der.leftMostDer(inputString)
 			
-			//r.leftMostDer(inputString)
 			
 			
 			//validate if string element is equal to vbar, hbar , fill. if not a error is throw
@@ -108,11 +108,11 @@ class LangRecognizer:Derivation {
 			if(plot_cmd[index] == "vbar" || plot_cmd[index] == "hbar"){
 				
 				
-				if(index+4 > inputSize){
-					
-					errorHandler("Error Syntax", "Input String does not contain minimun arguments")
-				}
-				
+//				if(index+4 > inputSize){
+//					
+//					errorHandler("Error Syntax: ", "Input String does not contain minimun arguments")
+//				}
+//				
 			
 				temp := plot_cmd[1].split(',')
 				tempy := temp[1].toStr.split(';')
@@ -127,8 +127,9 @@ class LangRecognizer:Derivation {
 				
 				if(plot_cmd[index] == "vbar"){
 									
-					inputString = inputString.replace("&lt;cmd&gt;", "vbar &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
-					//insert to der object
+					inputString = inputString.replace("<cmd>", "vbar <x><y>,<y>")
+					
+					der.leftMostDer(inputString)
 					
 					if(!validateCoord(coordx, index)){
 						
@@ -143,8 +144,8 @@ class LangRecognizer:Derivation {
 					
 					
 					
-					
-					if(!validateY(coordy)){
+					echo(coordy.getRange(0..0))
+					if(!validateY(coordy.getRange(0..0))){
 						
 						
 						errorHandler("Error Sytnax: ${coordy} is a invalid y", "Y valid numbers: ${y}")
@@ -152,17 +153,20 @@ class LangRecognizer:Derivation {
 						
 					}
 					
-					
-					inputString = inputString.replace("&lt;y&gt;", "${coordy}")
-					//ll der to store derivation
+					echo(coordy)
+					echo(coordx.getRange(1..1) + "  " + coordy.getRange(0..0))
+					echo(inputString)
+					inputString = inputString.replace("<y>", "${coordy.getRange(0..0)}")
+					echo(inputString)
+					der.leftMostDer(inputString)
 				
 					
 				}else{ // validating for hbar
 					
-					echo("hbar here")
 					
-					inputString = inputString.replace("&lt;cmd&gt;", "hbar &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
-					//call der to store derivation
+					echo("Hbar************************")
+					inputString = inputString.replace("<cmd>", "hbar <x><y>,<x>")
+					der.leftMostDer(inputString)
 					
 					if(!validateCoord(coordx, index)){
 						
@@ -170,10 +174,13 @@ class LangRecognizer:Derivation {
 					}
 					
 					
-					if(!validateCoord(coordy, index)){
+					if(!validateX(coordy)){
 						
 						return false
 					}
+					
+					inputString = inputString.replace("<x>", "${coordy}")
+					der.leftMostDer(inputString)
 					
 				}
 				
@@ -193,11 +200,7 @@ class LangRecognizer:Derivation {
 					
 					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+1]}")
 				}
-//				if(plot_cmd[index+2] == ";" || plot_cmd[index+2] == "end"){
-//
-//					
-//					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+2]}")
-//				}
+
 				
 				tempCoord := plot_cmd[index+1]
 				 
@@ -206,8 +209,8 @@ class LangRecognizer:Derivation {
 				if(plot_cmd[index] == "fill"){
 					
 					
-					inputString = inputString.replace("&lt;cmd&gt;", "fill &lt;x&gt;&lt;y&gt;,&lt;y&gt;")
-					//call der function to save
+					inputString = inputString.replace("<cmd>", "fill <x><y>")
+					der.leftMostDer(inputString)
 					
 					if(!validateCoord(tempCoord, index)){
 						
@@ -236,16 +239,18 @@ class LangRecognizer:Derivation {
 	
 	Bool validateCoord(Str  dataInput, Int position){
 		
+		//Allowed X and Y values
 		x := ["1", "2","3","4","5","6","7"]
 		y := ["1", "2","3","4","5","6","7"]
 		
 		
-		
+		// 
 		data := dataInput.getRange(0..1)
 		datax := dataInput.getRange(0..0)
 		datay := dataInput.getRange(1..1)
 		
-		
+		//create object for derivation class
+		der := Derivation()
 		
 		
 		//validate values for xy
@@ -264,6 +269,11 @@ class LangRecognizer:Derivation {
 		}
 		
 		
+		inputString = inputString.replace("<x>", datax)
+		
+		der.leftMostDer(inputString)
+		
+		
 		//validate values for y
 		
 		if(!validateY(datay)){
@@ -271,6 +281,9 @@ class LangRecognizer:Derivation {
 			errorHandler("Error Sytnax: ${datay} is an invalid for y **", "Valid y values are: ${y}")
 			return false
 		}
+		
+		inputString = inputString.replace("<y>", datay)
+		der.leftMostDer(inputString)
 		
 		return true
 	}
@@ -282,7 +295,7 @@ class LangRecognizer:Derivation {
 
 	    for(Int i := 0; i < x.size; i++){
 	      if( data == x[i]){
-	        
+	      
 	        return true
 	      }
 	    }
@@ -295,13 +308,14 @@ class LangRecognizer:Derivation {
 	
 	Bool validateY(Str data){
 		
-		
+		der := Derivation()
 	
 	y := ["1", "2","3","4","5","6","7"]
 
 	    for(Int i := 0; i < y.size; i++){
 	      if( data == y[i]){
-	        
+				
+	       
 	        return true
 	      }
 	    }

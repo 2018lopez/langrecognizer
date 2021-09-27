@@ -2,23 +2,11 @@
 class Derivation {
 	
 	
-		
+	// function accept string and then print content of the string	
 	Void leftMostDer(Str input){
 	
-	list := Str[""]
-	
-			
-	list.add("program   →  " + input).toStr
-		
-	printDerivation(list)
-		
-		
-		
-}
-	
-	Void printDerivation(Str [] data){
-		
-		
-		echo(data.toStr)
+		echo("program   →  " + input)
+
 	}
+
 }
