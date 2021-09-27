@@ -15,13 +15,13 @@ class LangRecognizer:Derivation {
 	//String is parse and validate by section
 	Void parserGrammer(Str input){
 		
-		der :=Derivation()
+		
+		
 		data := input.split(' ')
 	
 
 		validateString(data)// to end
 		ValidatePlotCmd(data)
-
 		
 
 	}	
@@ -136,15 +136,16 @@ class LangRecognizer:Derivation {
 						return false
 					}
 					
-				
+					tempI := coordx.getRange(1..1)
+					
+					inputString = inputString.replace(",${tempI}",",<y>")
+					der.leftMostDer(inputString)
 					if(coordy.size != 1){
 						
 						errorHandler("Error : ${coordy} - ${coordy.size} size isn't correct", "Y valid numbers: ${y}")
 					}
 					
 					
-					
-					echo(coordy.getRange(0..0))
 					if(!validateY(coordy.getRange(0..0))){
 						
 						
@@ -152,19 +153,16 @@ class LangRecognizer:Derivation {
 						return false
 						
 					}
-					
-					echo(coordy)
-					echo(coordx.getRange(1..1) + "  " + coordy.getRange(0..0))
-					echo(inputString)
+				
 					inputString = inputString.replace("<y>", "${coordy.getRange(0..0)}")
-					echo(inputString)
+					
 					der.leftMostDer(inputString)
 				
 					
 				}else{ // validating for hbar
 					
 					
-					echo("Hbar************************")
+					
 					inputString = inputString.replace("<cmd>", "hbar <x><y>,<x>")
 					der.leftMostDer(inputString)
 					
@@ -172,6 +170,11 @@ class LangRecognizer:Derivation {
 						
 						return false
 					}
+					
+					temps := coordx.getRange(0..0)
+					
+					inputString = inputString.replace(",${temps}",",<x>")
+					der.leftMostDer(inputString)
 					
 					
 					if(!validateX(coordy)){
@@ -308,7 +311,7 @@ class LangRecognizer:Derivation {
 	
 	Bool validateY(Str data){
 		
-		der := Derivation()
+		
 	
 	y := ["1", "2","3","4","5","6","7"]
 
