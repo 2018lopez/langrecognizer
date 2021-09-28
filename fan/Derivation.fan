@@ -60,8 +60,12 @@ class Derivation {
                 echo("\t\t    < chart >")
                 echo("\t\t/\t|\t\\ ")
                 echo("\tto\t  < plot_cmd >\t   end ")
-
-                for(Int i := 0; i < treeData.size; i++){
+                
+				Int i := 0
+                while(i < treeData.size){
+					
+					
+					
 
                     if( treeData[i] == "to <cmd> end" ){
                         echo("\t\t / ")
@@ -69,27 +73,15 @@ class Derivation {
                         echo("\t    /  |  |  \\")
                         i++
                     }
-                    if( treeData[i] == "to  <x><y>,<x> end" ){
-                        echo("\fill <x><y>")
-                        i++
+					
+					
+                    if( treeData[i] == "to fill <x><y> end" ){
+                        echo("\tfill <x><y>")
+                         
                     }
-
-//                    if( treeData[i] == treeData[4]){
-//                        echo("\t      |  |   \\ ")
-//                        echo("\t     <${treeData[4].getRange(8..8)}><y>,<y>")
-//                    
-//                    }
-//
-//                    if( treeData[i] == treeData[4]){
-//                        echo("\t        |   \\ ")
-//                        echo("\t       <${treeData[4].getRange(9..9)}>,<y>")
-//                        
-//                    }
-//                    if( treeData[i] == treeData[4]){
-//                        echo("\t        |   \\ ")
-//                        echo("\t            <${treeData[4].getRange(11..11)}>")
-//                        
-//                    }
+					 
+					
+					i++
                 }
 				
             }
@@ -132,6 +124,8 @@ class Derivation {
                         
                     }
                 }
+				
+				 echo("\n\t  " + treeData[4])//prints 
             }//End else
 	}
 	
