@@ -16,7 +16,7 @@ class LangRecognizer:Derivation {
 	//String is parse and validate by section
 	Void parserGrammer(Str input){
 	
-		treeV := Tree()
+		
 		
 	// Split String pass by user by space
 		data := input.split(' ')
@@ -65,7 +65,7 @@ class LangRecognizer:Derivation {
 		x := ["1", "2","3","4","5","6","7"]
 		y := ["1", "2","3","4","5","6","7"]
 
-		ptree := Tree()
+		
 		der := Derivation()// declare derivation object
 		plot_cmd := data.getRange(1 ..data.size - 2)// get content from string excluding the first and last element in the string
 		inputSize := plot_cmd.size// string size
