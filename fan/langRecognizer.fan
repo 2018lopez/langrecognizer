@@ -26,7 +26,11 @@ class LangRecognizer:Derivation {
 			
 			// validate the rest of content in the string exclude out the first and last element 	
 			ValidatePlotCmd(data)
+//			treeV.printTree()
 		}
+		
+		
+		
 
 	}	
 		
@@ -42,12 +46,12 @@ class LangRecognizer:Derivation {
 	
 		if(  data[0] != chartStart){// validate to first element of the string and if its not equal to chartStart a error is printed
 				
-			errorHandler("Error Syntax:  ${data[0]} is an invalid sytnax.",  "String should begin with:  ${chartStart}")
+			errorHandler("Error Syntax:  ${data[0]} is an invalid sytnax. ",  " String should begin with:  ${chartStart}")
 			return false
 		}
 			
 		if( lastElement != chartEnd  ){// validate the last element of the string and if  its not equal to chartEnd a error is printed
-			errorHandler("Error Syntax:  ${lastElement} is an invalid sytnax."," String should end with:  ${chartEnd}")
+			errorHandler("Error Syntax:  ${lastElement} is an invalid sytnax. "," String should end with:  ${chartEnd}")
 			return false
 		}
 		
@@ -61,7 +65,7 @@ class LangRecognizer:Derivation {
 		x := ["1", "2","3","4","5","6","7"]
 		y := ["1", "2","3","4","5","6","7"]
 
-		
+		ptree := Tree()
 		der := Derivation()// declare derivation object
 		plot_cmd := data.getRange(1 ..data.size - 2)// get content from string excluding the first and last element in the string
 		inputSize := plot_cmd.size// string size
@@ -129,12 +133,12 @@ class LangRecognizer:Derivation {
 					
 					if(coordy.size != 1){// validate the second y and verify it a single digit number 
 						
-						errorHandler("Error : ${coordy} - ${coordy.size} size isn't correct", "Y valid numbers: ${y}")
+						errorHandler("Error : ${coordy} - ${coordy.size} size isn't correct. ", " Y valid numbers: ${y}")
 					}
 				
 					if(!validateY(coordy.getRange(0..0))){//validate the second y in vbar element
 					
-						errorHandler("Error Sytnax: ${coordy} is a invalid y", "Y valid numbers: ${y}")
+						errorHandler("Error Sytnax: ${coordy} is a invalid y. ", " Y valid numbers: ${y}")
 						return false
 					}
 					
@@ -179,12 +183,12 @@ class LangRecognizer:Derivation {
 				
 				if(index+1 > plot_cmd.size){//verify size of the fill element
 					
-					errorHandler("Statement does not meet the minimum arguments","Verify string enter with grammer")
+					errorHandler("Statement does not meet the minimum arguments. "," Verify string enter with grammer")
 				}
 			
 				if(plot_cmd[index+1] == ";" || plot_cmd[index+1] == "end"){// verify that data on fill element
 
-					errorHandler("Statement does meet the minumum arguments","String enter at ${plot_cmd[index+1]}")
+					errorHandler("Statement does meet the minumum arguments. "," String enter at ${plot_cmd[index+1]}")
 				}
 				
 					tempCoord := plot_cmd[index+1]//get xy values from element
@@ -205,15 +209,17 @@ class LangRecognizer:Derivation {
 				
 			}else{
 				
-				errorHandler("Error Synatx: ${plot_cmd[index]} an invalid statement", "Valid Statement: vbar, hbar, fill")
+				errorHandler("Error Synatx: ${plot_cmd[index]} an invalid statement. ", " Valid Statement: vbar, hbar, fill")
 				index +=5
 			}
 
 		}
 		
+		der.printTree()
 		return true
 		
 	}
+	
 	
 	//Function ValidateCoord - validate xy values pass in
 	Bool validateCoord(Str  dataInput, Int position){
@@ -234,14 +240,14 @@ class LangRecognizer:Derivation {
 		//verify that value pass is a double digit number
 		if( data.size != 2){
 			
-			errorHandler("Error Sytnax: ${data} is invalid sytnax","Correct sytnax should look : 22")
+			errorHandler("Error Sytnax: ${data} is invalid sytnax. "," Correct sytnax should look : 22")
 			return false
 		}
 		
 		//validate value for x
 		if(!validateX(datax)){
 			
-			errorHandler("Error Sytnax: ${datax} is an invalid for x ", "Valid x values are: ${x}")
+			errorHandler("Error Sytnax: ${datax} is an invalid for x. ", " Valid x values are: ${x}")
 			return false
 		}
 		
@@ -257,7 +263,7 @@ class LangRecognizer:Derivation {
 		//validate value for y
 		if(!validateY(datay)){
 			
-			errorHandler("Error Sytnax: ${datay} is an invalid for y **", "Valid y values are: ${y}")
+			errorHandler("Error Sytnax: ${datay} is an invalid for y. ", " Valid y values are: ${y}")
 			return false
 		}
 		
@@ -311,6 +317,8 @@ class LangRecognizer:Derivation {
 	//Function errorHandler - prints error, accepts two string arguments
 	Void errorHandler(Str msg, Str error ){
 		
+		echo("\n")
+		echo("********************************************************************************************************")
 		echo(msg + error) // print the error pass
 	}
 
