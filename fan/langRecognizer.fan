@@ -2,7 +2,7 @@
 	
 class LangRecognizer:Derivation {
 	
-	//Declare string to store derivation everytime a validate occurs
+	//Declare string to store derivation every time a validate occurs
 	Str inputString :=""
 	
 	
